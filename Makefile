@@ -2,6 +2,7 @@ BOOKS=alice christmas_carol dracula frankenstein heart_of_darkness life_of_bee m
 
 FREQLISTS=$(BOOKS:%=results/%.freq.txt)
 SENTEDBOOKS=$(BOOKS:%=results/%.sent.txt)
+PARSEDBOOKS=$(BOOKS:$=results/%.parsed.txt)
 
 all: $(FREQLISTS) $(SENTEDBOOKS)
 
@@ -25,4 +26,7 @@ results/all.freq.txt: $(BOOKS:%=results/%.freq.txt)
 
 results/all.sent.txt: $(BOOKS:%=results/%.sent.txt)
 	cat $^ >> $@
+
+results/%.parsed.txt: results/%.sent.txt
+	python3 src/parse.py $< $@
 
